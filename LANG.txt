@@ -1,0 +1,25 @@
+#include <stdio.h>
+
+int main() {
+    int choice;
+
+    while(1) {
+        printf("\n1. English\n2. Tamil\n3. Hindi\n4. Telugu\n5. Exit\n");
+        printf("Enter choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1: printf("English selected\n");
+            break;
+            case 2: printf("Tamil selected\n");
+            break;
+            case 3: printf("Hindi selected\n");
+            break;
+            case 4: printf("Telugu selected\n")
+            ; break;
+            case 5:
+            return 1;
+            default: printf("Invalid choice\n");
+        }
+    }
+}

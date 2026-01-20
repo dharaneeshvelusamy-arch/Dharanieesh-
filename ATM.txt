@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+int main()
+{
+    int pin, choice, amount;
+    int balance = 0;
+    int attempts = 3;
+
+    while (attempts > 0)
+    {
+        printf("Enter PIN: ");
+        scanf("%d", &pin);
+
+        if (pin == 1234)
+        {
+            printf("\n1. Balance");
+            printf("\n2. Withdraw");
+            printf("\nEnter choice: ");
+            scanf("%d", &choice);
+
+            if (choice == 1)
+            {
+                printf("Balance = %d\n", balance);
+            }
+            else if (choice == 2)
+            {
+                printf("Enter amount: ");
+                scanf("%d", &amount);
+
+                if (amount <= balance)
+                {
+                    balance -= amount;
+                    printf("Done! Balance = %d\n", balance);
+                }
+                else
+                {
+                    printf("No money\n");
+                }
+            }
+            return 0;
+        }
+        else
+        {
+            attempts--;
+            printf("Wrong PIN! Left: %d\n", attempts);
+        }
+    }
+
+    printf("Card Blocked\n");
+    return 0;
+}

@@ -1,0 +1,62 @@
+#include <stdio.h>
+
+// void user defined functions
+void add( float a,  float b)
+{
+    printf("Addition = %f\n", a + b);
+}
+
+void sub( float a,  float b)
+{
+    printf("Subtraction = %f\n", a - b);
+}
+
+void mul( float a,  float b)
+{
+    printf("Multiplication = %f\n", a * b);
+}
+
+void div( float a,  float b)
+{
+    if (b != 0)
+        printf("Division = %.2f\n", (float)a / b);
+    else
+        printf("Error! Division by zero\n");
+}
+
+int main()
+{
+    float a, b;
+    int choice;
+
+    printf("Enter two numbers: ");
+    scanf("%f %f", &a, &b);
+
+    printf("\n1. Add\n2. Subtract\n3. Multiply\n4. Divide\n");
+    printf("Enter your choice: ");
+    scanf("%d", &choice);
+
+    switch (choice)
+    {
+        case 1:
+            add(a, b);
+            break;
+
+        case 2:
+            sub(a, b);
+            break;
+
+        case 3:
+            mul(a, b);
+            break;
+
+        case 4:
+            div(a, b);
+            break;
+
+        default:
+            printf("Invalid choice\n");
+    }
+
+    return 0;
+}

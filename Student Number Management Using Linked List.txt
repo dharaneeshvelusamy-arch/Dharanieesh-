@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct student {
+    long number;
+    struct student *nextwrd;
+};
+int main() {
+    struct student *cart1, *cart2, *cart3, *head;
+    cart1 = (struct student *)malloc(sizeof(struct student));
+    cart2 = (struct student *)malloc(sizeof(struct student));
+    cart3 = (struct student *)malloc(sizeof(struct student));
+    printf("Enter 1st number: ");
+    scanf("%ld", &cart1->number);
+    printf("Enter 2nd number: ");
+    scanf("%ld", &cart2->number);
+    printf("Enter 3rd number: ");
+    scanf("%ld", &cart3->number);
+    cart3->nextwrd = cart2;
+    cart2->nextwrd = cart1;
+    cart1->nextwrd = NULL;
+    head = cart3;
+    printf("\nLinked List:\n");
+    while (head != NULL) {
+        printf("%ld --> ", head->number);
+        head = head->nextwrd;
+    }
+    printf("NULL");
+    return 0;
+}
+

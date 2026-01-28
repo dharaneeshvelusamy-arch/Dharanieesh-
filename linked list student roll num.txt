@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct student {
+    long number;
+    struct student *nextwrd;
+};
+int main()
+{
+    struct student *rollno1 = (struct student *)malloc(sizeof(struct student));
+    struct student *rollno2 = (struct student *)malloc(sizeof(struct student));
+    printf("Enter The 1st Number: ");
+    scanf("%ld", &rollno1->number);
+    printf("Enter The 2nd Number: ");
+    scanf("%ld", &rollno2->number);
+    rollno1->nextwrd = rollno2;
+    rollno2->nextwrd = NULL;
+    struct student *head = rollno1;
+    printf("\nLinked List:\n");
+    while (head != NULL) {
+        printf("Roll %ld --> ", head->number);
+        head = head->nextwrd;
+    }
+    printf("NULL");
+    return 0;
+}

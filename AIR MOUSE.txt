@@ -1,0 +1,72 @@
+#include <BleMouse.h>
+#include <Wire.h>
+#include <MPU6050.h>
+
+BleMouse bleMouse("ESP32 Air Mouse");
+MPU6050 mpu;
+
+// Click buttons
+const int leftBtn = 18;
+const int rightBtn = 19;
+
+// Variables for smoothing
+float prevX = 0;
+float prevY = 0;
+const float smoothing = 0.2; // 0.1–0.3 recommended
+
+int16_t ax, ay, az;
+int16_t gx, gy, gz;
+
+void setup() {
+  Serial.begin(115200);
+  Wire.begin();
+  
+  pinMode(leftBtn, INPUT_PULLDOWN);
+  pinMode(rightBtn, INPUT_PULLDOWN);
+
+  mpu.initialize();
+  if (!mpu.testConnection()) {
+    Serial.println("MPU6050 connection failed!");
+    while (1);
+  }
+
+  bleMouse.begin();
+  Serial.println("ESP32 Air Mouse Ready");
+}
+
+void loop() {
+  if (bleMouse.isConnected()) {
+    // Read MPU6050 gyro/accel data
+    mpu.getMotion6(&ax, &ay, &az, &gx, &gy, &gz);
+
+    // Convert gyro to mouse movement
+    float xMove = -gy / 150.0; // Adjust sensitivity
+    float yMove = gx / 150.0;
+
+    // Smooth cursor movement
+    xMove = prevX * (1 - smoothing) + xMove * smoothing;
+    yMove = prevY * (1 - smoothing) + yMove * smoothing;
+
+    prevX = xMove;
+    prevY = yMove;
+
+    // Move mouse
+    bleMouse.move((int)xMove, (int)yMove);
+
+    // Left Click
+    if (digitalRead(leftBtn) == HIGH) {
+      bleMouse.press(MOUSE_LEFT);
+    } else {
+      bleMouse.release(MOUSE_LEFT);
+    }
+
+    // Right Click
+    if (digitalRead(rightBtn) == HIGH) {
+      bleMouse.press(MOUSE_RIGHT);
+    } else {
+      bleMouse.release(MOUSE_RIGHT);
+    }
+
+    delay(15); // Small delay for stability
+  }
+}
